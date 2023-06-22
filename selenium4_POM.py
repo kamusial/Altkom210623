@@ -31,5 +31,15 @@ def api_v1():
     warnings.warn(UserWarning("api v1, should use functions from v2"))
     return 1
 
+def api_v2():
+    warnings.warn(UserWarning("api v1, should use functions from v2"))
+    return 1
 
+def api_v3():
+    warnings.warn(UserWarning("api v1, should use functions from v2"))
+    return 1
+
+def api_v4():
+    warnings.warn(UserWarning("api v1, should use functions from v2"))
+    return 1
 

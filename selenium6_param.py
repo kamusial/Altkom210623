@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 from selenium import webdriver
 from selenium4_POM import *
@@ -15,7 +17,7 @@ test_data = [
 
 # @pytest.mark.parametrize('username, url', [('standard_user', 'https://www.saucedemo.com/inventory.html'), \
 #                          ('locked_out_user', 'https://www.saucedemo.com/')])
-
+@pytest.mark.skip(reason='duzy test')
 @pytest.mark.parametrize('username, password, url', test_data)
 def test_login_page(username, password, url):
     driver = webdriver.Chrome()
@@ -38,5 +40,23 @@ def test_login_page(username, password, url):
         driver.quit()
 
 
+xfail = pytest.mark.xfail
+
+@xfail
 def test_one():
-    assert api_v1() == 1
+    assert api_v1() == 2
+
+
+def test_two():
+    if True:
+        pytest.skip('zla konfiguracja')
+    assert api_v2() == 1
+
+skip_on_windows = pytest.mark.skipif(sys.platform == "win32", reason="tests for linux only")
+@skip_on_windows
+def test_three():
+    assert api_v3() == 1
+
+@pytest.mark.skipif(sys.version_info < (3, 10), reason='zly python')
+def test_four():
+    assert api_v4() == 1

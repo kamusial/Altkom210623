@@ -3,6 +3,7 @@ from time import sleep
 import datetime
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 
 # def make_screenshot(przegladarka):
@@ -21,8 +22,15 @@ def make_screenshot(przegladarka, sciezka=r'C:\Users\Student\Desktop\Public'):
 
 
 if __name__ == '__main__':
-    driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless=new')
+    driver = webdriver.Chrome(options=options)
     driver.get('https://saucedemo.com/')
+    #width = 1920
+    #height = driver.execute_script('return Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentELement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);')
+    #height = driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
+    #driver.set_window_size(100, 100)
+    #print(height)
     print('Nazwa strony',driver.title)
     sleep(1)
 
@@ -45,7 +53,9 @@ if __name__ == '__main__':
     if not login_button.get_attribute('disabled'):
         login_button.click()
 
-    sleep(1)
-    make_screenshot(driver)
-    print('Print selenium2')
+    S = lambda X: driver.execute_script('return document.body.parentNode.scroll' + X)
+    driver.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
+    driver.find_element(By.TAG_NAME,'body').screenshot('web_screenshot.png')
+
     driver.quit()
+

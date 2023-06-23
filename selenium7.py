@@ -55,6 +55,25 @@ print(driver.title)
 inputTypes = driver.find_element('xpath', '//*[@id="leftmenuinnerinner"]/a[42]')
 inputTypes.click()
 
-time.sleep(2)
+tryCheckbox = driver.find_element('xpath', '//*[@id="main"]/div[13]/a')
+tryCheckbox.click()
 
+currentWindow_name = driver.current_window_handle
+windowNames = driver.window_handles
+
+for window in windowNames:
+    if window != currentWindow_name:
+        driver.switch_to.window(window)
+
+print(driver.title)
+
+driver.switch_to.frame(driver.find_element(By.ID, 'iframeResult'))
+
+bike = driver.find_element(By.ID, 'vehicle1')
+bike.click()
+print('zaznaczyles ', driver.find_element('xpath', '/html/body/form/label[1]').text)
+time.sleep(1)
+driver.close()
+driver.switch_to.window(currentWindowName)
+time.sleep(1)
 driver.quit()
